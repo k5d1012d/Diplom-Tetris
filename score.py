@@ -79,7 +79,7 @@ class Score:
     # / ----------------------------------------------------------------------- \
 
     def levels_func(self):
-        self.threshold_score = config.speed * config.removed_rows * config.ncols
+        self.threshold_score = config.скорость * config.removed_rows * config.КолвоКолонок
         return self.threshold_score
         
     # / ----------------------------------------------------------------------- \
@@ -93,7 +93,7 @@ class Score:
     def level_up(self):
         _level_up = False
         if self.score >= self.threshold_score:            
-            config.speed += 1
+            config.скорость += 1
             
             self.previous = self.previous_score()            
             ds = self.score - self.threshold_score

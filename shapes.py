@@ -288,7 +288,7 @@ class Shapes:
             self.position = copy(shape.position)
 
         # Initial (x, y) position
-        self.x =  config.game_boundaries[0] +  (config.ncols // 2  - 1) * config.block_size
+        self.x =  config.game_boundaries[0] +  (config.КолвоКолонок // 2  - 1) * config.block_size
         self.y = -(len(self.dict_shapes[self.shape_key][self.position]) * config.block_size)
 
         # Color
@@ -374,7 +374,7 @@ class Shapes:
             else:
                 self.pressed_y_speed = 0
          
-        y_move = config.speed + self.pressed_y_speed        
+        y_move = config.скорость + self.pressed_y_speed        
         self.move_shape(0, y_move)
         
         # See if next position is filled:
@@ -504,7 +504,7 @@ class Shapes:
             removed_rows = []
             for row in range(config.nrows)[::-1]:
                 cols_filled = [i for i, idx in enumerate(self.dropped_index) if idx[0] == row]
-                if len(cols_filled) == config.ncols:                    
+                if len(cols_filled) == config.КолвоКолонок:                    
                     removed_rows.append(row)
                     indexes_removed.extend(cols_filled)
             

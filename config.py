@@ -35,7 +35,7 @@ class Configuration:
         
         # Background images
         self.images = {'MENU BACKGROUND' :    self.load_image('./Images/menu_background.png'),
-                       'OPTIONS BACKGROUND' : self.load_image('./Images/options_background.png'),
+                       'Опции BACKGROUND' : self.load_image('./Images/options_background.png'),
                        'RECORDS BACKGROUND' : self.load_image('./Images/records_background.png'),
                        'GAME BACKGROUND' :    self.load_image('./Images/game_background.png'),
                        'INSTRUCTIONS' :       self.load_image('./Images/instructions.png'),
@@ -52,10 +52,10 @@ class Configuration:
         max_block_size = 40
         self.grid_sizes = [self.grid_size(size) for size in range(min_block_size, max_block_size+1, 2)]
         self.grid_sizes = [grid_size for grid_size in self.grid_sizes if grid_size[1] >= min_ncols]
-        self.nrows, self.ncols, self.block_size, self.game_boundaries = self.grid_sizes[-1]
+        self.nrows, self.КолвоКолонок, self.block_size, self.game_boundaries = self.grid_sizes[-1]
 
-        # Falling speed
-        self.speed = 1
+        # Falling скорость
+        self.скорость = 1
         
         # Rows to remove to pass level
         self.removed_rows = 20
@@ -118,19 +118,19 @@ class Configuration:
         h = ymax - ymin                
         
         # Grid size
-        ncols = int(w / block_size)    
+        КолвоКолонок = int(w / block_size)    
         nrows = int(h / block_size)
             
         # Ncols must be an odd number
-        if not ncols % 2:
-            ncols += 1
+        if not КолвоКолонок % 2:
+            КолвоКолонок += 1
             xmin -= int(block_size / 2)
             xmax += int(block_size / 2)
             w += block_size
 
         game_boundaries = [xmin, ymin, xmax, ymax]
 
-        return nrows, ncols, block_size, game_boundaries
+        return nrows, КолвоКолонок, block_size, game_boundaries
         
     # / ----------------------------------------------------------------------- \
 
@@ -152,7 +152,7 @@ class Configuration:
             window_h = self.window_h
 
         # Scaling the text
-        font = pg.font.Font('./font/Purisa.ttf', int(font_size * window_h / self.reference_h))
+        font = pg.font.Font('./font/wizland.ttf', int(font_size * window_h / self.reference_h))
         text_surface = font.render(text, True, color)
 
         text_w, text_h = text_surface.get_size()
@@ -188,8 +188,8 @@ class Configuration:
         # 'x' and 'y' is for the upper left coordinate of the button
 
         # Lowercase is for spinners; 
-        # 'x' and 'y' is for the upper left coordinate of the text:  `ncols {current value} [spinner arrow]`
-        self.buttons_size = {'START' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
+        # 'x' and 'y' is for the upper left coordinate of the text:  `КолвоКолонок {current value} [spinner arrow]`
+        self.buttons_size = {'Старт' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
                                         'y' : self.window_h / 3,
                                         'w' : w_button1,
                                         'h' : h_button1},
@@ -199,7 +199,7 @@ class Configuration:
                                        'w' : w_button1,
                                        'h' : h_button1},
                                                  
-                             'OPTIONS' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
+                             'Опции' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
                                           'y' : self.window_h / 3 + y_space_buttons,
                                           'w' : w_button1,
                                           'h' : h_button1},
@@ -229,12 +229,12 @@ class Configuration:
                                        'w' : w_button1,
                                        'h' : h_button1},
                                                          
-                             'speed' : {'x' : self.window_w / 6 - w_button3/ 2,
+                             'скорость' : {'x' : self.window_w / 6 - w_button3/ 2,
                                         'y' : self.window_h / 5 + y_space_buttons,
                                         'w' : w_button3,
                                         'h' : h_button2}, 
                              
-                             'ncols' : {'x' : self.window_w / 6 - w_button3/ 2,
+                             'КолвоКолонок' : {'x' : self.window_w / 6 - w_button3/ 2,
                                         'y' : self.window_h / 5 + y_space_buttons * 2,
                                         'w' : w_button3,
                                         'h' : h_button2},                     
@@ -275,7 +275,7 @@ class Configuration:
                                  'y' : self.rects['next_shape'].bottom + self.window_h * 0.07},
 
                       # X and Y center
-                      'speed' : {'x' : self.rects['next_shape'].center[0],
+                      'скорость' : {'x' : self.rects['next_shape'].center[0],
                                  'y' : self.rects['next_shape'].bottom + self.window_h * 0.16},
 
                       # X and Y center                                      

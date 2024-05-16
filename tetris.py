@@ -98,13 +98,13 @@ class  Spinner(Button):
         Button.__init__(self, key, function, draw_on)        
         
         # Values to put on the spinner
-        if self.key == 'speed':
-            self.current_val = f'{config.speed}'
+        if self.key == 'скорость':
+            self.current_val = f'{config.скорость}'
             self.vals = list(range(1,11))                        
             self.vals_font_size = config.small_text
         
-        elif self.key == 'ncols':
-            self.current_val = f'{config.ncols}'
+        elif self.key == 'КолвоКолонок':
+            self.current_val = f'{config.КолвоКолонок}'
             self.vals = sorted(list(set([i[1] for i in config.grid_sizes])))
             self.vals_font_size = config.small_text
         
@@ -224,16 +224,16 @@ class Tetris:
                           pg.K_r :         shape.rotate,
                           pg.K_q :         self.exit,
                           pg.K_SPACE :     self.pause,
-                          'START' :        self.play,
-                          'OPTIONS' :      self.options,
+                          'Старт' :        self.play,
+                          'Опции' :      self.options,
                           'RANKING' :      self.ranking,
                           'BACK' :         self.menu,
                           'HOME' :         self.home,                       
                           'CONTINUE' :     self._continue,
                           'RESTART GAME' : self.restart_game,
                           'EXIT':          self.exit,
-                          'speed' :        self.change_speed,
-                          'ncols' :        self.change_ncols,
+                          'скорость' :        self.change_speed,
+                          'КолвоКолонок' :        self.change_ncols,
                           'next shape' :   self.enable_next_shape,
                           'big shapes' :   self.enable_big_shapes}
                        
@@ -243,7 +243,7 @@ class Tetris:
 
 
     def draw_score(self, color):
-        text = f'Score : {score.score}'
+        text = f'Счет : {score.score}'
         surface, rect = config.text_objects(text,  
                                             x_center=config.texts['score']['x'],
                                             y_center=config.texts['score']['y'],
@@ -253,10 +253,10 @@ class Tetris:
 
 
     def draw_speed(self, color):
-        text = f'Speed : {config.speed}'
+        text = f'Скорость : {config.скорость}'
         surface, rect = config.text_objects(text,  
-                                            x_center=config.texts['speed']['x'],
-                                            y_center=config.texts['speed']['y'],
+                                            x_center=config.texts['скорость']['x'],
+                                            y_center=config.texts['скорость']['y'],
                                             color=color)
         self.screen.blit(surface, rect)
 
@@ -385,7 +385,7 @@ class Tetris:
     # / ----------------------------------------------------------------------- \
 
     def restart_game(self):        
-        config.speed = 1
+        config.скорость = 1
         shape.restart()        
         score.restart()
         self.play()
@@ -393,7 +393,7 @@ class Tetris:
     # / ----------------------------------------------------------------------- \
 
     def home(self):
-        config.speed = 1
+        config.скорость = 1
         shape.restart()        
         score.restart()
         self.menu()        
@@ -409,14 +409,14 @@ class Tetris:
     # / ----------------------------------------------------------------------- \
     
     def change_speed(self, value):
-        config.speed = value
+        config.скорость = value
         score.restart()
         
     # / ----------------------------------------------------------------------- \
         
     def change_ncols(self, value):
         grid_size = [i for i in config.grid_sizes if i[1] == value][-1]
-        config.nrows, config.ncols, config.block_size, config.game_boundaries = grid_size
+        config.nrows, config.КолвоКолонок, config.block_size, config.game_boundaries = grid_size
         config.set_objects_positions()
         score.restart()
 
@@ -449,10 +449,10 @@ class Tetris:
 
     def menu(self):
                 
-        key_buttons = ['START', 'OPTIONS', 'RANKING', 'EXIT']
+        key_buttons = ['Старт', 'Опции', 'RANKING', 'EXIT']
         buttons = [Button(key, self.functions[key], self.screen) for key in key_buttons]
         
-        text = 'Press F1 to see keyboard instructions'
+        text = 'Press F1 to see keyboard instructionsR'
         cx = config.texts['instructions']['x']
         cy = config.texts['instructions']['y']
 
@@ -555,7 +555,7 @@ class Tetris:
         key_button = 'BACK'
         button = Button(key_button, self.functions[key_button], self.screen)
 
-        key_spinners = ['speed', 'ncols', 'next shape', 'big shapes']
+        key_spinners = ['скорость', 'КолвоКолонок', 'next shape', 'big shapes']
         spinners = [Spinner(key, self.functions[key], self.screen) for key in key_spinners]
         
         self.running = True
@@ -565,7 +565,7 @@ class Tetris:
                 if event.type == pg.QUIT:
                     self.exit()
 
-            self.screen.blit(config.images['OPTIONS BACKGROUND'], (0,0))
+            self.screen.blit(config.images['Опции BACKGROUND'], (0,0))
 
             button.status()
             if button.button_on:
