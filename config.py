@@ -1,30 +1,20 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-__project__ = 'TETRIS'
-__file__ = './config.py'
-__license__ = 'GPL'
-__version__ = '1.0'
-__date__ = 'May, 2020'
-__maintainer__ = 'Jose Trinidad Soto Gonzalez'
-
-# / -------------------------------------------------------------------------- \
 
 import pygame as pg
 from color import colors
 
-# / -------------------------------------------------------------------------- \
+
 
 class Configuration:
     
-    # / ----------------------------------------------------------------------- \
+
 
     def __init__(self):
 
         pg.init()
         pg.mixer.init()
 
-        # Screen information
+        # информация на экране
         info = pg.display.Info()
 
         self.reference_w = info.current_w
@@ -33,7 +23,7 @@ class Configuration:
         self.window_w = int(self.reference_w * 0.80)
         self.window_h = self.reference_h
         
-        # Background images
+        # фоновое изображение
         self.images = {'MENU BACKGROUND' :    self.load_image('./Images/menu_background.png'),
                        'Опции BACKGROUND' : self.load_image('./Images/options_background.png'),
                        'RECORDS BACKGROUND' : self.load_image('./Images/records_background.png'),
@@ -41,26 +31,26 @@ class Configuration:
                        'INSTRUCTIONS' :       self.load_image('./Images/instructions.png'),
                        'ICON' :               self.load_image('./Images/icon.png')}
         
-        # Time settings
+        # настройка времени
         self.clock = pg.time.Clock()
         # Frames per second
         self.fps = 30
 
-        # Grid size (gameboard)
+        # размер сетки
         min_ncols = 9
         min_block_size = 24
         max_block_size = 40
         self.grid_sizes = [self.grid_size(size) for size in range(min_block_size, max_block_size+1, 2)]
         self.grid_sizes = [grid_size for grid_size in self.grid_sizes if grid_size[1] >= min_ncols]
-        self.nrows, self.КолвоКолонок, self.block_size, self.game_boundaries = self.grid_sizes[-1]
+        self.nrows, self.Количество_Колонок, self.block_size, self.game_boundaries = self.grid_sizes[-1]
 
-        # Falling скорость
+        # скорость падения
         self.скорость = 1
         
-        # Rows to remove to pass level
+        # строки, которые нужно удалить
         self.removed_rows = 20
 
-        # Font sizes
+        # размер шрифта
         self.small_text = 18
         self.medium_text = 24
         self.larger_text = 45
@@ -69,10 +59,10 @@ class Configuration:
         self.set_objects_positions()
         self.set_buttons_positions()
 
-        # Enable big shapes
+        # Включение_больших_фигур
         self.big_shapes = False
 
-        # Enable display next shape
+        # Enable display Следующая фигура
         self.see_next_shape = True
 
         # Work later
@@ -85,11 +75,11 @@ class Configuration:
                              'ERESE' :     './sounds/erese.wav',
                              'DROP' :      './sounds/drop.wav'}
 
-    # / ----------------------------------------------------------------------- \
+
     
     def grid_size(self, block_size=40):
 
-        # Gameboard boundaries
+        # границы поля
         x_proportion = 0.35
         y_proportion = 0.10
 
@@ -118,21 +108,20 @@ class Configuration:
         h = ymax - ymin                
         
         # Grid size
-        КолвоКолонок = int(w / block_size)    
+        Количество_Колонок = int(w / block_size)
         nrows = int(h / block_size)
             
         # Ncols must be an odd number
-        if not КолвоКолонок % 2:
-            КолвоКолонок += 1
+        if not Количество_Колонок % 2:
+            Количество_Колонок += 1
             xmin -= int(block_size / 2)
             xmax += int(block_size / 2)
             w += block_size
 
         game_boundaries = [xmin, ymin, xmax, ymax]
 
-        return nrows, КолвоКолонок, block_size, game_boundaries
+        return nrows, Количество_Колонок, block_size, game_boundaries
         
-    # / ----------------------------------------------------------------------- \
 
     def text_objects(self, 
                      text='', 
@@ -173,7 +162,7 @@ class Configuration:
 
         return text_surface, text_rect
 
-    # / ----------------------------------------------------------------------- \
+
 
     def set_buttons_positions(self):
 
@@ -188,7 +177,7 @@ class Configuration:
         # 'x' and 'y' is for the upper left coordinate of the button
 
         # Lowercase is for spinners; 
-        # 'x' and 'y' is for the upper left coordinate of the text:  `КолвоКолонок {current value} [spinner arrow]`
+        # 'x' and 'y' is for the upper left coordinate of the text:  `Количество_Колонок {current value} [spinner arrow]`
         self.buttons_size = {'Старт' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
                                         'y' : self.window_h / 3,
                                         'w' : w_button1,
@@ -209,7 +198,7 @@ class Configuration:
                                            'w' : w_button1,
                                            'h' : h_button1},                                                                        
 
-                             'RANKING' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
+                             'Добавить' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
                                          'y' : self.window_h / 3 + y_space_buttons * 2,
                                          'w' : w_button1,
                                          'h' : h_button1},
@@ -219,12 +208,12 @@ class Configuration:
                                                'w' : w_button1,
                                                'h' : h_button1},
 
-                             'BACK' : {'x' : self.window_w * 0.2 - w_button2/ 2,
+                             'Закрыть' : {'x' : self.window_w * 0.2 - w_button2/ 2,
                                        'y' : self.window_h * 0.1,
                                        'w' : w_button2,
                                        'h' : h_button1},                                            
                                                           
-                             'EXIT' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
+                             'Выход' : {'x' : self.window_w / 4 * 3 - w_button1/ 2,
                                        'y' : self.window_h / 3 + y_space_buttons * 3,
                                        'w' : w_button1,
                                        'h' : h_button1},
@@ -234,12 +223,12 @@ class Configuration:
                                         'w' : w_button3,
                                         'h' : h_button2}, 
                              
-                             'КолвоКолонок' : {'x' : self.window_w / 6 - w_button3/ 2,
+                             'Количество_Колонок' : {'x' : self.window_w / 6 - w_button3/ 2,
                                         'y' : self.window_h / 5 + y_space_buttons * 2,
                                         'w' : w_button3,
                                         'h' : h_button2},                     
 
-                             'next shape' : {'x' : self.window_w / 6 - w_button3/ 2,
+                             'Следующая фигура' : {'x' : self.window_w / 6 - w_button3/ 2,
                                              'y' : self.window_h / 5 + y_space_buttons * 3,
                                              'w' : w_button3,
                                              'h' : h_button2},                     
@@ -250,7 +239,6 @@ class Configuration:
                                              'h' : h_button2}
                             }     
 
-    # / ----------------------------------------------------------------------- \
     
     def set_objects_positions(self):        
 
@@ -303,7 +291,7 @@ class Configuration:
                                         'y' : self.window_h - self.window_h*0.10}
                      }                                                                           
 
-    # / ----------------------------------------------------------------------- \
+
 
     def load_image(self, filename, window_w=None, window_h=None):
         
@@ -317,21 +305,16 @@ class Configuration:
         img = pg.transform.smoothscale(img, (window_w, window_h))
         return img
 
-    # / ----------------------------------------------------------------------- \
 
     def load_sound(self, filename, volume=0.5):
         self.sound = pg.mixer.Sound(filename)
         self.sound.set_volume(volume)
         
-    # / ----------------------------------------------------------------------- \
+
 
 config = Configuration()
 
- # / -------------------------------------------------------------------------- \
- # / --------------------------------------------------- \
- # / -------------------------------- \
- # / ------------- \
- # / END
+
         
 
 

@@ -1,14 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-__project__ = 'TETRIS'
-__file__ = './shapes.py'
-__license__ = 'GPL'
-__version__ = '1.0'
-__date__ = 'May, 2020'
-__maintainer__ = 'Jose Trinidad Soto Gonzalez'
-
-# / -------------------------------------------------------------------------- \
 
 import random
 from copy import copy
@@ -17,9 +7,6 @@ import pygame as pg
 
 from config import config
 from color import colors, ColorEffect
-
-# / -------------------------------------------------------------------------- \
-
 # Shapes and rotations
 T = [['000',
       '.0.'],
@@ -228,7 +215,7 @@ weights_big_shapes = {'TT' : 0.25,
 
 class Shapes:
     
-    # / ----------------------------------------------------------------------- \
+
 
     def __init__(self):
 
@@ -249,7 +236,7 @@ class Shapes:
             self.dict_shapes = dict_shapes
             self.weights = weights
         
-    # / ----------------------------------------------------------------------- \
+
 
     def restart(self):
 
@@ -268,7 +255,7 @@ class Shapes:
             self.dict_shapes = dict_shapes
             self.weights = weights            
         
-    # / ----------------------------------------------------------------------- \
+
                 
     def next_shape(self, shape=None):
         
@@ -288,7 +275,7 @@ class Shapes:
             self.position = copy(shape.position)
 
         # Initial (x, y) position
-        self.x =  config.game_boundaries[0] +  (config.КолвоКолонок // 2  - 1) * config.block_size
+        self.x =  config.game_boundaries[0] +  (config.Количество_Колонок // 2  - 1) * config.block_size
         self.y = -(len(self.dict_shapes[self.shape_key][self.position]) * config.block_size)
 
         # Color
@@ -297,7 +284,7 @@ class Shapes:
         self.get_shape()        
         self.move = True
         
-    # / ----------------------------------------------------------------------- \
+
                 
     def get_shape(self):
   
@@ -314,8 +301,7 @@ class Shapes:
 
         self.shape_corners = self.get_shape_corners()
         self.center = self.get_shape_center()
-        
-    # / ----------------------------------------------------------------------- \
+
 
     def get_shape_corners(self):
         xs = [rect[0] for rect in self.shape]
@@ -327,7 +313,7 @@ class Shapes:
         self.shape_corners = [xmin, ymin, xmax, ymax]
         return self.shape_corners        
         
-    # / ----------------------------------------------------------------------- \
+
 
     def get_shape_center(self):
         cx = self.shape_corners[0] + (self.shape_corners[2] - self.shape_corners[0]) / 2
@@ -335,7 +321,7 @@ class Shapes:
         self.center = [cx, cy]
         return self.center
         
-    # / ----------------------------------------------------------------------- \
+
 
     def get_index(self, x, y):
         # Get row and column index when shape can't move down'
@@ -343,7 +329,7 @@ class Shapes:
         col = int((x - config.game_boundaries[0]) / config.block_size)
         return row, col    
         
-    # / ----------------------------------------------------------------------- \
+
 
     def difference(self, bound, current_shape_bound, direction='bottom'):
         
@@ -362,7 +348,7 @@ class Shapes:
 
         return diff        
         
-    # / ----------------------------------------------------------------------- \
+
 
     def move_down(self, pressed_y=None):
         
@@ -396,7 +382,7 @@ class Shapes:
 
         return self.move
         
-    # / ----------------------------------------------------------------------- \
+
         
     def move_left(self):
         
@@ -416,7 +402,7 @@ class Shapes:
                         self.move_shape(diff, 0)
                         return None
                         
-    # / ----------------------------------------------------------------------- \
+
 
     def move_right(self):
         
@@ -435,7 +421,7 @@ class Shapes:
                         self.move_shape(diff, 0)                        
                         return None
                         
-    # / ----------------------------------------------------------------------- \
+
 
     def move_shape(self, x, y):
         self.x += x
@@ -444,7 +430,7 @@ class Shapes:
         self.shape_corners = self.get_shape_corners()
         self.center = self.get_shape_center()
         
-    # / ----------------------------------------------------------------------- \
+
 
     def rotate(self):
         
@@ -480,7 +466,7 @@ class Shapes:
                 if diff_right != 0:
                     self.move_shape(-diff_right, 0)
                     
-    # / ----------------------------------------------------------------------- \
+
               
     def update_filled_spaces(self):
         # Append current shape to the dropped shapes
@@ -490,7 +476,7 @@ class Shapes:
             self.dropped_index.append([row, col])
             self.dropped_colors.append(self.shape_color)
 
-    # / ----------------------------------------------------------------------- \
+
 
     def erese_blocks(self):
 
@@ -504,7 +490,7 @@ class Shapes:
             removed_rows = []
             for row in range(config.nrows)[::-1]:
                 cols_filled = [i for i, idx in enumerate(self.dropped_index) if idx[0] == row]
-                if len(cols_filled) == config.КолвоКолонок:                    
+                if len(cols_filled) == config.Количество_Колонок:                    
                     removed_rows.append(row)
                     indexes_removed.extend(cols_filled)
             
@@ -552,7 +538,7 @@ class Shapes:
 
         return n_eresed
         
-    # / ----------------------------------------------------------------------- \
+
 
     def draw_eresed(self, screen):
         for i, rect, in enumerate(self.eresed):
@@ -567,7 +553,7 @@ class Shapes:
         pg.display.update()
         pg.time.wait(350)
 
-    # / ----------------------------------------------------------------------- \        
+
 
     def draw_shape(self, screen):
         color = self.shape_color.change_color()
@@ -576,7 +562,7 @@ class Shapes:
                 pg.draw.rect(screen, color, rect)
                 pg.draw.rect(screen, colors['white'], rect, 1)
 
-    # / ----------------------------------------------------------------------- \
+
 
     def draw_filled(self, screen):
         if self.dropped:
@@ -585,7 +571,7 @@ class Shapes:
                 pg.draw.rect(screen, color, rect)
                 pg.draw.rect(screen, colors['white'], rect, 1)
 
-    # / ----------------------------------------------------------------------- \
+
     
     def draw_next_shape(self, x, y, screen):
         
@@ -598,10 +584,3 @@ class Shapes:
             pg.draw.rect(screen, color, rect)
             pg.draw.rect(screen, colors['white'], rect, 1)               
     
-    # / ----------------------------------------------------------------------- \         
-   
- # / -------------------------------------------------------------------------- \
- # / --------------------------------------------------- \
- # / -------------------------------- \
- # / ------------- \
- # / END

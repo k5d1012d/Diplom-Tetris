@@ -1,18 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-__project__ = 'TETRIS'
-__file__ = './color.py'
-__license__ = 'GPL'
-__version__ = '1.0'
-__date__ = 'May, 2020'
-__maintainer__ = 'Jose Trinidad Soto Gonzalez'
-
-# / -------------------------------------------------------------------------- \
-
 import pygame as pg
 
-# / -------------------------------------------------------------------------- \
 
 colors = {'gray' :   pg.Color( 31,  31,  31),
           'white' :  pg.Color(235, 235, 235),
@@ -29,7 +16,7 @@ colors = {'gray' :   pg.Color( 31,  31,  31),
 
 class ColorEffect:
     
-    # / ----------------------------------------------------------------------- \
+
     
     def __init__(self, color=colors['cherry'], interval=60, length=10):
 
@@ -44,7 +31,7 @@ class ColorEffect:
         self.index = self.hue_values.index(hue)
         self.add = 1
 
-    # / ----------------------------------------------------------------------- \
+
     
     def set_hue_values(self, hue_value):
             
@@ -59,7 +46,7 @@ class ColorEffect:
         [hue_values.extend([i]*self.length) for i in h]
         return hue_values
         
-    # / ----------------------------------------------------------------------- \
+
     
     def hue_limits(self, hue):
         if hue > 360:
@@ -68,7 +55,7 @@ class ColorEffect:
             hue += 360
         return hue
         
-    # / ----------------------------------------------------------------------- \
+
         
     def clip_sat_light(self, value):
         if value > 100:
@@ -77,7 +64,7 @@ class ColorEffect:
             value = 0
         return value
         
-    # / ----------------------------------------------------------------------- \
+
 
     def change_color(self):
         
@@ -96,12 +83,10 @@ class ColorEffect:
        l = self.hsl_color[2]
        return self.hsl2rgb(h, s, l)
        
-    # / ----------------------------------------------------------------------- \
+
 
     def hsl2rgb(self, h, s, l):
         
-        # Fron wikipedia:
-        # https://en.wikipedia.org/wiki/HSL_and_HSV#Color_conversion_formulae
 
         if h == 360:
             h = 0
@@ -129,7 +114,7 @@ class ColorEffect:
         
         return pg.Color(round(r * 255), round(g * 255), round(b * 255))
         
-    # / ----------------------------------------------------------------------- \
+
 
     def modify_color(self, color, h=0, s=0, l=0):
         
@@ -150,10 +135,3 @@ class ColorEffect:
         rgb_color = self.hsl2rgb(h, s, l)
         return rgb_color
        
-    # / ----------------------------------------------------------------------- \
-      
- # / -------------------------------------------------------------------------- \
- # / --------------------------------------------------- \
- # / -------------------------------- \
- # / ------------- \
- # / END

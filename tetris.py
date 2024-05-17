@@ -35,7 +35,7 @@ class Button:
         self.button_on = False
         self.function = function
         
-        # Draw the button on this surface
+        # Draw the button Вкл this surface
         self.screen = draw_on        
 
         self.draw_params = {'button' : self.button,
@@ -81,7 +81,7 @@ class Button:
 
     
     def __call__(self):
-        # Run button function if button is turn on
+        # Run button function if button is turn Вкл
         if self.button_on:
             self.button_on = False
             self.function()
@@ -97,33 +97,33 @@ class  Spinner(Button):
 
         Button.__init__(self, key, function, draw_on)        
         
-        # Values to put on the spinner
+        # Values to put Вкл the spinner
         if self.key == 'скорость':
             self.current_val = f'{config.скорость}'
             self.vals = list(range(1,11))                        
             self.vals_font_size = config.small_text
         
-        elif self.key == 'КолвоКолонок':
-            self.current_val = f'{config.КолвоКолонок}'
+        elif self.key == 'Количество_Колонок':
+            self.current_val = f'{config.Количество_Колонок}'
             self.vals = sorted(list(set([i[1] for i in config.grid_sizes])))
             self.vals_font_size = config.small_text
-        
-        elif self.key == 'next shape':
-            self.key = f'Enable next shape'
+
+        elif self.key == 'Следующая фигура':
+            self.key = f'Следующая_Фигура'
             if config.see_next_shape:
-                self.current_val = ' On'
+                self.current_val = ' Вкл'
             else:
-                self.current_val = ' Off'
-            self.vals = ['On', 'Off']
+                self.current_val = ' Выкл'
+            self.vals = ['Вкл', 'Выкл']
             self.vals_font_size = int(config.small_text - config.small_text * 0.3)
 
         elif self.key == 'big shapes':
-            self.key = f'Enable big shapes'
+            self.key = f'Включение_больших_фигур'
             if config.big_shapes:
-                self.current_val = ' On'
+                self.current_val = ' Вкл'
             else:
-                self.current_val = ' Off'
-            self.vals = ['On', 'Off']
+                self.current_val = ' Выкл'
+            self.vals = ['Вкл', 'Выкл']
             self.vals_font_size = int(config.small_text - config.small_text * 0.3)
 
         self.text = f'{self.key } {self.current_val}'            
@@ -149,7 +149,7 @@ class  Spinner(Button):
 
     def __call__(self):
         
-        # Display the values of the spinner when the button is turn on
+        # Display the values of the spinner when the button is turn Вкл
         if self.button_on:
             pg.time.wait(250)
         
@@ -215,7 +215,7 @@ class Tetris:
         
         self.screen = pg.display.set_mode((config.window_w, config.window_h))        
         pg.display.set_caption('TETRIS')
-        pg.display.set_icon(config.images['ICON'])   # This doesn't work on Linux Mint :(
+        pg.display.set_icon(config.images['ICON'])   # This doesn't work Вкл Linux Mint :(
                                                      # or at least only in my computer
                     
         self.functions = {pg.K_LEFT :      shape.move_left,
@@ -226,15 +226,15 @@ class Tetris:
                           pg.K_SPACE :     self.pause,
                           'Старт' :        self.play,
                           'Опции' :      self.options,
-                          'RANKING' :      self.ranking,
-                          'BACK' :         self.menu,
+                          'Добавить' :      self.ranking,
+                          'Закрыть' :         self.menu,
                           'HOME' :         self.home,                       
                           'CONTINUE' :     self._continue,
                           'RESTART GAME' : self.restart_game,
-                          'EXIT':          self.exit,
+                          'Выход':          self.exit,
                           'скорость' :        self.change_speed,
-                          'КолвоКолонок' :        self.change_ncols,
-                          'next shape' :   self.enable_next_shape,
+                          'Количество_Колонок' :        self.change_ncols,
+                          'Следующая фигура' :   self.enable_next_shape,
                           'big shapes' :   self.enable_big_shapes}
                        
         self.running = False
@@ -270,7 +270,7 @@ class Tetris:
             
             pg.draw.rect(self.screen, color, config.rects['next_shape'], 5)
             
-            surface, rect = config.text_objects('Next Shape', 
+            surface, rect = config.text_objects('Следующая фигура', 
                                                 x_center=config.texts['next_shape']['x'], 
                                                 y_center=config.texts['next_shape']['y'],
                                                 color=color)
@@ -344,17 +344,13 @@ class Tetris:
             pg.display.update()
             pg.time.wait(1000)
                     
-    # / ----------------------------------------------------------------------- \
 
-    # Functions
-
-    # / ----------------------------------------------------------------------- \
     
     def exit(self):
         pg.quit()
         quit()
 
-    # / ----------------------------------------------------------------------- \
+
 
     def pause(self):
         pause = True
@@ -368,21 +364,20 @@ class Tetris:
                 if event.key == pg.K_SPACE:
                     pause = False    
         
-    # / ----------------------------------------------------------------------- \
+
         
     def level_up(self):
         pg.time.wait(2000)
         shape.restart()
         self.start_count()
 
-    # / ----------------------------------------------------------------------- \
+
 
     def _continue(self):        
         shape.restart()
         score.restart(level=True)
         self.play()
 
-    # / ----------------------------------------------------------------------- \
 
     def restart_game(self):        
         config.скорость = 1
@@ -390,7 +385,7 @@ class Tetris:
         score.restart()
         self.play()
 
-    # / ----------------------------------------------------------------------- \
+
 
     def home(self):
         config.скорость = 1
@@ -398,7 +393,7 @@ class Tetris:
         score.restart()
         self.menu()        
 
-    # / ----------------------------------------------------------------------- \
+
     
     def is_losser(self):
         loss = False
@@ -406,53 +401,48 @@ class Tetris:
             loss = True
         return loss
         
-    # / ----------------------------------------------------------------------- \
+
     
     def change_speed(self, value):
         config.скорость = value
         score.restart()
         
-    # / ----------------------------------------------------------------------- \
+
         
     def change_ncols(self, value):
         grid_size = [i for i in config.grid_sizes if i[1] == value][-1]
-        config.nrows, config.КолвоКолонок, config.block_size, config.game_boundaries = grid_size
+        config.nrows, config.Количество_Колонок, config.block_size, config.game_boundaries = grid_size
         config.set_objects_positions()
         score.restart()
 
-    # / ----------------------------------------------------------------------- \
+
 
     def enable_next_shape(self, value):
-        if value == 'On':
+        if value == 'Вкл':
             config.see_next_shape = True
-        elif value == 'Off':
+        elif value == 'Выкл':
             config.see_next_shape = False
 
-    # / ----------------------------------------------------------------------- \
+
 
     def enable_big_shapes(self, value):
         
-        if value == 'On':
+        if value == 'Вкл':
             config.big_shapes = True
             
-        elif value == 'Off':
+        elif value == 'Выкл':
             config.big_shapes = False
 
         shape.restart()
         next_shape.restart()
 
-    # / ----------------------------------------------------------------------- \
-
-    # Interactive functions
-
-    # / ----------------------------------------------------------------------- \
 
     def menu(self):
                 
-        key_buttons = ['Старт', 'Опции', 'RANKING', 'EXIT']
+        key_buttons = ['Старт', 'Опции', 'Добавить', 'Выход']
         buttons = [Button(key, self.functions[key], self.screen) for key in key_buttons]
         
-        text = 'Press F1 to see keyboard instructionsR'
+        text = 'Нажмите  F1, чтобы найти инструкцию '
         cx = config.texts['instructions']['x']
         cy = config.texts['instructions']['y']
 
@@ -493,11 +483,11 @@ class Tetris:
         for button in buttons:
             button()
 
-    # / ----------------------------------------------------------------------- \
+
 
     def see_instructions(self):
 
-        key_button = 'BACK'
+        key_button = 'Закрыть'
         button = Button(key_button, self.functions[key_button], self.screen)
 
         self.running = True
@@ -518,13 +508,13 @@ class Tetris:
             
         button()            
 
-    # / ----------------------------------------------------------------------- \
+
 
     def ranking(self):
                                 
         names, records = score.load_records()
         
-        key_button = 'BACK'
+        key_button = 'Закрыть'
         button = Button(key_button, self.functions[key_button], self.screen)
 
         self.running = True
@@ -548,14 +538,14 @@ class Tetris:
             
         button()            
 
-    # / ----------------------------------------------------------------------- \
+
 
     def options(self):
                 
-        key_button = 'BACK'
+        key_button = 'Закрыть'
         button = Button(key_button, self.functions[key_button], self.screen)
 
-        key_spinners = ['скорость', 'КолвоКолонок', 'next shape', 'big shapes']
+        key_spinners = ['скорость', 'Количество_Колонок', 'Следующая фигура', 'big shapes']
         spinners = [Spinner(key, self.functions[key], self.screen) for key in key_spinners]
         
         self.running = True
@@ -582,11 +572,11 @@ class Tetris:
             
         button()                   
 
-    # / ----------------------------------------------------------------------- \
+
 
     def restart_continue(self):
                                 
-        key_buttons = ['HOME', 'CONTINUE', 'RESTART GAME', 'EXIT']
+        key_buttons = ['HOME', 'CONTINUE', 'RESTART GAME', 'Выход']
         buttons = [Button(key, self.functions[key], self.screen) for key in key_buttons]
 
         self.running = True
@@ -610,7 +600,7 @@ class Tetris:
             if button.button_on:
                 return button
 
-    # / ----------------------------------------------------------------------- \                                            
+
 
     def write_record(self):
 
@@ -684,7 +674,7 @@ class Tetris:
 
         pg.time.wait(2000)
 
-    # / ----------------------------------------------------------------------- \
+
                             
     def play(self):
 
@@ -777,15 +767,10 @@ class Tetris:
         pg.time.wait(250)
         button()
         
-    # / ----------------------------------------------------------------------- \
+
 
 if __name__ == '__main__':
               
     tetris = Tetris()
     tetris.menu()
 
- # / -------------------------------------------------------------------------- \
- # / --------------------------------------------------- \
- # / -------------------------------- \
- # / ------------- \
- # / END
